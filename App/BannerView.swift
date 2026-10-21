@@ -7,7 +7,7 @@ final class BannerView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(white: 0.1, alpha: 0.96)
+        backgroundColor = UIColor(red: 0x1A / 255.0, green: 0x1A / 255.0, blue: 0x1A / 255.0, alpha: 1)
         isUserInteractionEnabled = false
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -38,9 +38,9 @@ final class BannerView: UIView {
         ])
         host.layoutIfNeeded()
 
-        transform = CGAffineTransform(translationX: 0, y: -bounds.height)
+        alpha = 0
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-            self.transform = .identity
+            self.alpha = 1
         }
 
         let work = DispatchWorkItem { [weak self] in self?.hide() }
@@ -50,7 +50,7 @@ final class BannerView: UIView {
 
     private func hide() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-            self.transform = CGAffineTransform(translationX: 0, y: -self.bounds.height)
+            self.alpha = 0
         }, completion: { _ in
             self.removeFromSuperview()
         })
